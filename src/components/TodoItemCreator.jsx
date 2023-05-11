@@ -1,44 +1,44 @@
 import React, { useState } from "react";
 import { useSetRecoilState } from "recoil";
 import { todoListState } from "~/src/states/todoAtoms";
+import { createTodo } from "~/src/lib";
 
 function TodoItemCreator() {
   // input 상태 관리
   const [inputValue, setInputValue] = useState("");
-
-  // input value를 구독하고 있는 atom 배열 값에 추가하기 위해(Update) useSetRecoilState() Hook 사용
+  // todoListState atom을 setTodoList 변수에 할당, List 추가 시 atom(recoil)값을 업데이트하여 리렌더링
   const setTodoList = useSetRecoilState(todoListState);
 
-  // input 값 변경
   const handleChange = (e) => {
     setInputValue(e.target.value);
   };
 
-  const addItem = () => {
-    setTodoList((oldTodoList) => [
-      // 기존 todoList를 유지
-      ...oldTodoList,
-      {
-        id: getId(),
-        text: inputValue,
-        isComplete: false,
-      },
-    ]);
-
-    // Item 추가 후, input value 초기화
-    setInputValue("");
+  const handleKeyPress = async (e) => {
+    if (e.key === "Enter") {
+      // Item add 후 input value 초기화
+      setInputValue("");
+      const newTodo = await createTodo(inputValue);
+      setTodoList((oldTodoList) => [...oldTodoList, newTodo]);
+    }
   };
 
-  // id 생성 함수
-  function getId(id = 0) {
-    return id++;
-  }
+  const addItem = async () => {
+    const newTodo = await createTodo(inputValue);
+    setTodoList((oldTodoList) => [...oldTodoList, newTodo]);
+  };
 
   return (
-    <div>
-      <input type="text" value={inputValue} onChange={handleChange} />
-      <button onClick={addItem}>ADD</button>
-    </div>
+    <>
+      <div>
+        <input
+          type="text"
+          value={inputValue}
+          onChange={handleChange}
+          onKeyPress={handleKeyPress}
+        />
+        <button onClick={() => addItem(inputValue)}>추가</button>
+      </div>
+    </>
   );
 }
 
