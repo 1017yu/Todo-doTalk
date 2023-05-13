@@ -23,6 +23,7 @@ function TodoItemCreator() {
   };
 
   const addItem = async () => {
+    setInputValue("");
     const newTodo = await createTodo(inputValue);
     setTodoList((oldTodoList) => [...oldTodoList, newTodo]);
   };
