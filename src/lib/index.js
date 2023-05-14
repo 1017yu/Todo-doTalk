@@ -3,7 +3,7 @@ const options = (method, data) => ({
   headers: {
     "content-type": "application/json",
     apikey: "KDT5_nREmPe9B",
-    username: "KDT5__YuHeeTae",
+    username: "KDT5_test",
   },
   body: JSON.stringify(data),
 });
@@ -25,17 +25,17 @@ const getTodo = async () => {
 };
 
 // 항목 수정
-const updateTodo = async ({ id, title, completed }) => {
-  const url = `${URL}/:${id}`;
-  const res = await fetch(url, options("PUT", { title, completed }));
+const updateTodo = async ({ id, title, done }) => {
+  const url = `${URL}/${id}`;
+  const res = await fetch(url, options("PUT", { title, done }));
   const data = await res.json();
   return data;
 };
 
 // 항목 삭제
 const deleteTodo = async (id) => {
-  const url = `${URL}/:${id}`;
-  const res = await fetch(url, options("DELETE", null));
+  const url = `${URL}/${id}`;
+  const res = await fetch(url, options("DELETE"));
   const data = await res.json();
   return data;
 };
