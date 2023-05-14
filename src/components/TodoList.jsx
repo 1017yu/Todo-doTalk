@@ -1,35 +1,37 @@
 import React, { useEffect } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import TodoItemCreator from "~/src/components/TodoItemCreator";
 import TodoItem from "~/src/components/TodoItem";
 import { todoListState } from "~/src/states/todoAtoms";
 import { getTodo } from "~/src/lib";
+import TodoModal from "./TodoModal";
 
 function TodoList() {
-  // `useSetRecoilState` todoListState recoil atom 상태 값 업데이트
+  // `useSetRecoilState` -> `todoListState` atom 업데이트
   const setTodoList = useSetRecoilState(todoListState);
 
-  // `useRecoilState` todoListState recoil 상태 값 동적 관리
+  // `useRecoilState` -> `todoListState` atom 참조
   const [todoList] = useRecoilState(todoListState);
 
-  // 컴포넌트가 마운트 될 때, getTodo를 호출하여 최초 렌더링 시
-  // GET으로 가져온 TodoList를 recoil 상태 값에 업데이트
+  // 컴포넌트가 마운트되면 `getTodo` 호출, 서버에서 TodoList GET
+  // `todoListState` atom은 TodoList로 업데이트
   useEffect(() => {
     const fetchTodo = async () => {
-      // GET 요청
+      // GET 요청,
       const data = await getTodo();
-      // setTodoList를 통해 GET 요청으로 반환된 data를 todoListState atom에 저장
+      // setTodoList를 통해 GET 요청으로 반환된 data로 todoListState atom 업데이트
       setTodoList(data);
     };
 
     fetchTodo();
+    // 최초 마운트될 때만 실행되어야 하므로 의존성 배열에 전달할 필요 없음.
   }, []);
 
+  // spread - reverse를 통해, 오래된 순부터 최신 순으로 map
   return (
     <>
-      <TodoItemCreator />
+      <TodoModal />
       <ul>
-        {todoList.map((todoItem) => (
+        {[...todoList].reverse().map((todoItem) => (
           <TodoItem key={todoItem.id} item={todoItem} />
         ))}
       </ul>
