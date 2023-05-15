@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components";
+import colors from "~/src/styles/colors";
 
 const GlobalStyle = createGlobalStyle`
 body {
@@ -9,6 +10,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
     box-sizing: border-box;
     min-height: 100%;
+    background-color: ${colors.blue[4]};
   }
 
   #root {
