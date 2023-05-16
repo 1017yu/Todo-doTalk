@@ -1,6 +1,6 @@
 # 📌 할 일 관리(Todo)기
 
-주어진 API를 활용해 '[완성 예시](https://beautiful-daifuku-b9462c.netlify.app/)' 처럼 자유롭게 할 일 관리(Todo) 기능을 구현해보세요!    
+주어진 API를 활용해 '[완성 예시](https://beautiful-daifuku-b9462c.netlify.app/)' 처럼 자유롭게 할 일 관리(Todo) 기능을 구현해보세요!  
 과제 수행 및 리뷰 기간은 별도 공지를 참고하세요!
 
 ## 과제 수행 및 제출 방법
@@ -24,16 +24,16 @@ E.g, KDT0_ParkYoungWoong
 
 ## 요구사항
 
-필수 요구사항은 꼭 달성해야 하는 목표로, 수정/삭제는 불가하고 추가는 가능합니다.    
+필수 요구사항은 꼭 달성해야 하는 목표로, 수정/삭제는 불가하고 추가는 가능합니다.  
 선택 요구사항은 단순 예시로, 자유롭게 추가/수정/삭제해서 구현해보세요.  
 각 요구사항은 달성 후 마크다운에서 `- [x]`로 표시하세요.
 
 ### ❗ 필수
 
-- [ ] 할 일 목록(List)이 출력돼야 합니다.
-- [ ] 할 일 항목(Item)을 새롭게 추가할 수 있어야 합니다.
-- [ ] 할 일 항목을 수정할 수 있어야 합니다.
-- [ ] 할 일 항목을 삭제할 수 있어야 합니다.
+- [x] 할 일 목록(List)이 출력돼야 합니다.
+- [x] 할 일 항목(Item)을 새롭게 추가할 수 있어야 합니다.
+- [x] 할 일 항목을 수정할 수 있어야 합니다.
+- [x] 할 일 항목을 삭제할 수 있어야 합니다.
 - [ ] 실제 서비스로 배포하고 접근 가능한 링크를 추가해야 합니다.
 
 ### ❔ 선택
@@ -63,21 +63,24 @@ API 사용 예시:
 
 ```js
 async function createTodo() {
-  const res = await fetch('https://asia-northeast3-heropy-api.cloudfunctions.net/api/todos', {
-    method: 'POST',
-    headers: {
-      'content-type': 'application/json',
-      'apikey': 'KDT5_nREmPe9B', // KDT 5기 APIKEY 입니다!
-      'username': 'KDT5_ParkYoungWoong'
-    },
-    body: JSON.stringify({
-      title: '아침 먹기!'
-    })
-  })
-  const json = await res.json()
-  console.log(json)
+  const res = await fetch(
+    "https://asia-northeast3-heropy-api.cloudfunctions.net/api/todos",
+    {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        apikey: "KDT5_nREmPe9B", // KDT 5기 APIKEY 입니다!
+        username: "KDT5_ParkYoungWoong",
+      },
+      body: JSON.stringify({
+        title: "아침 먹기!",
+      }),
+    }
+  );
+  const json = await res.json();
+  console.log(json);
 
-  return json
+  return json;
 }
 ```
 
@@ -97,15 +100,15 @@ curl https://asia-northeast3-heropy-api.cloudfunctions.net/api/todos
 응답 데이터 타입 및 예시:
 
 ```ts
-type ResponseValue = Todo[] // 할 일 목록
+type ResponseValue = Todo[]; // 할 일 목록
 
 interface Todo {
-  id: string // 할 일 ID
-  order: number // 할 일 순서
-  title: string // 할 일 제목
-  done: boolean // 할 일 완료 여부
-  createdAt: string // 할 일 생성일
-  updatedAt: string // 할 일 수정일
+  id: string; // 할 일 ID
+  order: number; // 할 일 순서
+  title: string; // 할 일 제목
+  done: boolean; // 할 일 완료 여부
+  createdAt: string; // 할 일 생성일
+  updatedAt: string; // 할 일 수정일
 }
 ```
 
@@ -151,7 +154,7 @@ curl https://asia-northeast3-heropy-api.cloudfunctions.net/api/todos/reorder
 
 ```ts
 interface RequestBody {
-  todoIds: string[] // 새롭게 정렬할 할 일 ID 목록 (필수!)
+  todoIds: string[]; // 새롭게 정렬할 할 일 ID 목록 (필수!)
 }
 ```
 
@@ -169,7 +172,7 @@ interface RequestBody {
 응답 데이터 타입 및 예시:
 
 ```ts
-type ResponseValue = true // 순서 변경 여부
+type ResponseValue = true; // 순서 변경 여부
 ```
 
 ### 항목 추가
@@ -185,8 +188,8 @@ curl https://asia-northeast3-heropy-api.cloudfunctions.net/api/todos
 
 ```ts
 interface RequestBody {
-  title: string // 할 일 제목 (필수!)
-  order?: number // 할 일 순서
+  title: string; // 할 일 제목 (필수!)
+  order?: number; // 할 일 순서
 }
 ```
 
@@ -201,12 +204,12 @@ interface RequestBody {
 
 ```ts
 interface ResponseValue {
-  id: string
-  order: number
-  title: string
-  done: boolean
-  createdAt: string
-  updatedAt: string
+  id: string;
+  order: number;
+  title: string;
+  done: boolean;
+  createdAt: string;
+  updatedAt: string;
 }
 ```
 
@@ -234,9 +237,9 @@ curl https://asia-northeast3-heropy-api.cloudfunctions.net/api/todos/:todoId
 
 ```ts
 interface RequestBody {
-  title: string // 할 일 제목 (필수!)
-  done: boolean // 할 일 완료 여부 (필수!)
-  order?: number // 할 일 순서
+  title: string; // 할 일 제목 (필수!)
+  done: boolean; // 할 일 완료 여부 (필수!)
+  order?: number; // 할 일 순서
 }
 ```
 
@@ -277,5 +280,13 @@ curl https://asia-northeast3-heropy-api.cloudfunctions.net/api/todos/:todoId
 응답 데이터 타입 및 예시:
 
 ```ts
-type ResponseValue = true
+type ResponseValue = true;
 ```
+
+`23.05.15`
+
+```
+기능이 추가 될 때마다, GET 요청 횟수 또한 비례하여 증가. 따라서 GetTodoHook을 생성하여 기능을 분리하였음.
+```
+
+`23.05.16`
