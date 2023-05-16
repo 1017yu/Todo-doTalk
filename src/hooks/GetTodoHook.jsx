@@ -15,8 +15,17 @@ function GetTodoHook() {
     const fetchTodoList = async () => {
       // GET 요청,
       const todoListData = await getTodo();
+
+      // order 프로퍼티의 value를 배열 내 index 번호와 일치시키는 작업
+      const sortedTodoList = todoListData.map((todoItem, index) => ({
+        ...todoItem,
+        order: index,
+      }));
+
+      console.log(sortedTodoList);
+
       // setTodoList를 통해 GET 요청으로 반환된 todoListData로 todoListState atom 업데이트
-      setTodoList(todoListData);
+      setTodoList(sortedTodoList);
     };
 
     fetchTodoList();
