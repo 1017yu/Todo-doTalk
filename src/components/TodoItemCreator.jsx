@@ -3,15 +3,15 @@
 import React, { useState } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { todoListState } from "~/src/states/todoAtoms";
-import { createTodo } from "~/src/lib";
+import { createTodo, getTodo } from "~/src/lib";
 
 function TodoItemCreator({ onClose }) {
   // input 상태 관리
   const [inputValue, setInputValue] = useState("");
 
   // todoListState atom을 setTodoList 변수에 할당, List 추가 시 atom(recoil)값을 업데이트하여 리렌더링
-  const setTodoList = useSetRecoilState(todoListState);
   const [todoList] = useRecoilState(todoListState);
+  const setTodoList = useSetRecoilState(todoListState);
 
   const handleChange = (e) => setInputValue(e.target.value);
 
@@ -21,7 +21,8 @@ function TodoItemCreator({ onClose }) {
         title: inputValue,
         order: todoList.length,
       });
-      setTodoList((oldTodoList) => [...oldTodoList, newTodo]);
+
+      updateTodoList(newTodo);
 
       // Item add 후 input value 초기화
       setInputValue("");
@@ -36,10 +37,27 @@ function TodoItemCreator({ onClose }) {
       title: inputValue,
       order: todoList.length,
     });
-    setTodoList((oldTodoList) => [...oldTodoList, newTodo]);
-    setInputValue("");
 
+    updateTodoList(newTodo);
+    setInputValue("");
     onClose();
+  };
+
+  const updateTodoList = async (newTodo) => {
+    const todoListData = await getTodo();
+    const sortedTodoList = todoListData.map((todoItem, index) => {
+      if (todoItem.id === newTodo.id) {
+        return {
+          ...todoItem,
+          order: todoList.length,
+        };
+      }
+      return {
+        ...todoItem,
+        order: index,
+      };
+    });
+    setTodoList(sortedTodoList);
   };
 
   return (
