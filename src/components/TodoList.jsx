@@ -6,6 +6,7 @@ import TodoItem from "~/src/components/TodoItem";
 import { todoListState } from "~/src/states/todoAtoms";
 import GetTodoHook from "~/src/hooks/GetTodoHook";
 import AddModal from "~/src/components/Modal/AddModal";
+import colors from "~/src/styles/colors.js";
 
 function TodoList() {
   GetTodoHook();
@@ -19,9 +20,10 @@ function TodoList() {
         <StyledSpan>2DO 💪🏼 LIST</StyledSpan>
         <AddModal />
       </StyledSection>
+      <StyledP>{`${todoList.length} tasks`}</StyledP>
       <StyledDiv>
         <StyledUl>
-          {[...todoList].reverse().map((todoItem) => (
+          {[...todoList].map((todoItem) => (
             <TodoItem key={todoItem.id} item={todoItem} />
           ))}
         </StyledUl>
@@ -33,9 +35,9 @@ function TodoList() {
 const StyledMain = styled.main`
   display: flex;
   flex-direction: column;
-  width: 50vw;
+  max-width: 500px;
   margin: auto;
-  padding: 2rem;
+  padding: 3rem;
   text-align: center;
   border-radius: 1.5rem;
   background-color: white;
@@ -47,10 +49,16 @@ const StyledSection = styled.section`
 
 const StyledSpan = styled.span`
   display: flex;
-  font-size: 3rem;
+  font-size: 2.5rem;
   margin-right: auto;
 `;
 
+const StyledP = styled.p`
+  text-align: left;
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: ${colors.blue[4]};
+`;
 const StyledDiv = styled.div``;
 
 const StyledUl = styled.ul`
