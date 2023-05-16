@@ -12,7 +12,7 @@ const DelTodoHook = ({ item }) => {
   // `todoListState` atom은 TodoList로 업데이트
   const deleteTodoList = async () => {
     // DELETE 요청,
-    await deleteTodo(todo.id);
+    await deleteTodo(item.id);
 
     // setTodoList를 통해 GET 요청으로 반환된 todoListData로 todoListState atom 업데이트
     setTodoList((oldTodoList) =>
