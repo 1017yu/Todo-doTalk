@@ -1,17 +1,28 @@
 //  Todo-item을 나열하는 TodoList 컴포넌트
-import React from "react";
-import { useRecoilState } from "recoil";
+import React, { useEffect } from "react";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import TodoItem from "~/src/components/TodoItem";
 import { todoListState } from "~/src/states/todoAtoms";
-import GetTodoHook from "~/src/hooks/GetTodoHook";
 import AddModal from "~/src/components/Modal/AddModal";
 import colors from "~/src/styles/colors.js";
+import { getTodo } from "../lib";
 
 function TodoList() {
-  GetTodoHook();
   // `useRecoilState` -> `todoListState` atom 참조
   const [todoList] = useRecoilState(todoListState);
+  const setTodoList = useSetRecoilState(todoListState);
+
+  useEffect(() => {
+    const fetchTodoList = async () => {
+      // GET 요청,
+      const todoListData = await getTodo();
+      // setTodoList를 통해 GET 요청으로 반환된 todoListData로 todoListState atom 업데이트
+      setTodoList(todoListData);
+    };
+
+    fetchTodoList();
+  }, []);
 
   // spread - reverse를 통해, 오래된 순부터 최신 순으로 map
   return (
