@@ -10,7 +10,11 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { BiEdit } from "react-icons/Bi";
 import { editTodo, getTodo } from "~/src/lib";
-import TodoInput from "../Todo/TodoInput";
+import { BsFillCameraFill } from "react-icons/Bs";
+import { FaArrowCircleUp } from "react-icons/Fa";
+import { IoIosAppstore } from "react-icons/Io";
+import colors from "~/src/styles/colors";
+
 // import colors from "~/src/styles/colors";
 
 const EditModal = ({ item }) => {
@@ -18,7 +22,6 @@ const EditModal = ({ item }) => {
   const [inputValue, setInputValue] = useState("");
 
   // todoListState atom을 setTodoList 변수에 할당, 추가 시 todoListState(atom) 값을 업데이트하여 리렌더링
-  const [todoList] = useRecoilState(todoListState);
   const setTodoList = useSetRecoilState(todoListState);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -32,24 +35,12 @@ const EditModal = ({ item }) => {
     order: item.order,
   };
 
+  const handleChange = (e) => setInputValue(e.target.value);
+
   const handleKeyPress = async (e) => {
     if (e.key === "Enter") {
       // Edit 후 onClose를 호출하여 atom 업데이트
-      const editedTodo = await editTodo(todo);
-
-      // useSetRecoilState로 가져온 todoListState(atom)값 업데이트
-      setTodoList((oldTodoList) =>
-        // id 값이 일치했을 때, Edit할 todo를 Update된 todo로 변경
-        oldTodoList.map((todoItem) =>
-          todoItem.id === todo.id ? editedTodo : todoItem
-        )
-      );
-      // Item add 후 input value 초기화
-      setInputValue("");
-      updateTodoList(editedTodo);
-
-      // Modal Close
-      handleClose();
+      updateItem();
     }
   };
 
@@ -64,24 +55,25 @@ const EditModal = ({ item }) => {
     setInputValue("");
     // Modal Close
     handleClose();
+    getTodo();
   };
 
-  const updateTodoList = async (newTodo) => {
-    const todoListData = await getTodo();
-    const sortedTodoList = todoListData.map((todoItem, index) => {
-      if (todoItem.id === newTodo.id) {
-        return {
-          ...todoItem,
-          order: todoList.length,
-        };
-      }
-      return {
-        ...todoItem,
-        order: index,
-      };
-    });
-    setTodoList(sortedTodoList);
-  };
+  // const updateTodoList = async (newTodo) => {
+  //   const todoListData = await getTodo();
+  //   const sortedTodoList = todoListData.map((todoItem, index) => {
+  //     if (todoItem.id === newTodo.id) {
+  //       return {
+  //         ...todoItem,
+  //         order: todoList.length,
+  //       };
+  //     }
+  //     return {
+  //       ...todoItem,
+  //       order: index,
+  //     };
+  //   });
+  //   setTodoList(sortedTodoList);
+  // };
 
   return (
     <>
@@ -95,9 +87,22 @@ const EditModal = ({ item }) => {
       >
         <StyledBox>
           <StyledDiv>
-            <TodoInput method={updateItem} keyPress={handleKeyPress}>
-              수정
-            </TodoInput>
+            <Div>
+              <BsFillCameraFill className="camera-Icon gray-Icon" />
+              <IoIosAppstore className="appStore-Icon gray-Icon" />
+              <Input
+                type="text"
+                value={inputValue}
+                onChange={handleChange}
+                onKeyPress={handleKeyPress}
+                placeholder="할일 입력"
+              />
+              <FaArrowCircleUp
+                className="submitButton-Icon"
+                type="submit"
+                onClick={updateItem}
+              />
+            </Div>
           </StyledDiv>
           <span>생성일: {formattedDate(item.createdAt)}</span>
           <span>수정일: {formattedDate(item.updatedAt)}</span>
@@ -123,6 +128,34 @@ const StyledBox = styled(Box)`
 
 const StyledDiv = styled.div`
   display: block;
+`;
+
+const Div = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+
+  .gray-Icon {
+    color: ${colors.gray[0]};
+    font-size: 2.5rem;
+  }
+
+  .submitButton-Icon {
+    position: absolute;
+    right: 0;
+    cursor: pointer;
+    font-size: 2rem;
+    color: ${colors.blue[5]};
+    right: 0.3rem;
+  }
+`;
+const Input = styled.input`
+  border-radius: 10px;
+  border-color: ${colors.gray[0]};
+  height: 40px;
+  width: 22rem;
 `;
 
 export default EditModal;
