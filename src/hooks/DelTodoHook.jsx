@@ -2,7 +2,7 @@
 // API 호출, TodoList를 받아온 후 todoListState Atom에 값을 할당
 import { useSetRecoilState } from "recoil";
 import { todoListState } from "~/src/states/todoAtoms";
-import { deleteTodo } from "~/src/lib";
+import { deleteTodo, getTodo, reorderTodo } from "~/src/lib";
 
 const DelTodoHook = ({ item }) => {
   // `useSetRecoilState` -> `todoListState` atom 업데이트
@@ -13,11 +13,22 @@ const DelTodoHook = ({ item }) => {
   const deleteTodoList = async () => {
     // DELETE 요청,
     await deleteTodo(item.id);
-
     // setTodoList를 통해 GET 요청으로 반환된 todoListData로 todoListState atom 업데이트
     setTodoList((oldTodoList) =>
       oldTodoList.filter((todoItem) => todoItem.id !== item.id)
     );
+
+    // reorder 통신으로 order값 정렬
+    const ids = [];
+    setTodoList((oldTodoList) => {
+      oldTodoList.forEach((item) => ids.push(item.id));
+      return oldTodoList;
+    });
+    await reorderTodo(ids);
+
+    // GET 통신
+    const updatedTodoList = await getTodo();
+    setTodoList(updatedTodoList);
   };
 
   return [deleteTodoList];
