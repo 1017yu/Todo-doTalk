@@ -5,8 +5,15 @@ function Layout({ children }) {
 }
 
 const StyledLayout = styled.div`
+  border: 0.4rem solid black;
   margin: auto;
-  padding-top: 100px;
+  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  text-align: center;
+  border-radius: 2rem;
+  background-color: white;
 `;
 
 export default Layout;
