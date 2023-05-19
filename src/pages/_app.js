@@ -1,6 +1,7 @@
 import { RecoilRoot } from "recoil";
 import GlobalStyle from "~/src/styles/GlobalStyle";
 import Layout from "../components/Layout";
+import Head from "next/head";
 
 // Component에는 각 pages component가 들어오고,
 // pageProps 는 getInitialProps를 통해 들어온 props들을 나타낸다.
@@ -10,6 +11,9 @@ function MyApp({ Component, pageProps }) {
     <RecoilRoot>
       <GlobalStyle />
       <Layout>
+        <Head>
+          <title>토도</title>
+        </Head>
         <Component {...pageProps} />
       </Layout>
     </RecoilRoot>
