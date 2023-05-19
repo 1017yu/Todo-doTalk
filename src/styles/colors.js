@@ -1,5 +1,6 @@
 const colors = {
-  blue: ["#EEF1FF", "#D2DAFF", "#AAC4FF", "#B1B2FF", "#7286D3"],
+  blue: ["#EEF1FF", "#D2DAFF", "#AAC4FF", "#B1B2FF", "#7286D3", "#147efb"],
+  gray: ["#d8d8d8", "#aeb9cc"],
 };
 
 export default colors;
