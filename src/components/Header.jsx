@@ -4,13 +4,15 @@ import colors from "~/src/styles/colors";
 import { formattedTime } from "~/src/lib/dateUtils";
 import { BiWifi } from "react-icons/Bi";
 import { GiNetworkBars } from "react-icons/Gi";
-import { BsBatteryHalf, BsCameraVideo } from "react-icons/Bs";
+import { BsBatteryHalf } from "react-icons/Bs";
 import { AiOutlineLeft, AiOutlineUser } from "react-icons/Ai";
 import { todoListState } from "~/src/states/todoAtoms";
 import { useRecoilState } from "recoil";
+import DelAllTodo from "../hooks/DelAllTodo";
 
 function Header() {
   const [todoList] = useRecoilState(todoListState);
+  const [delAllTodo] = DelAllTodo();
 
   return (
     <StyledHeader>
@@ -33,7 +35,9 @@ function Header() {
           </Circle>
           Kled
         </UserDiv>
-        <BsCameraVideo className="videoCamera-Icon" />
+        <AllDeleteButton onClick={() => delAllTodo()}>
+          <Span>선택 삭제</Span>
+        </AllDeleteButton>
       </Div>
     </StyledHeader>
   );
@@ -50,13 +54,15 @@ const Div = styled.div`
   display: flex;
   justify-content: center;
   gap: 100px;
+`;
 
-  .videoCamera-Icon {
-    position: absolute;
-    right: 1rem;
-    top: 46px;
-    font-size: 2rem;
-  }
+const AllDeleteButton = styled.button`
+  position: absolute;
+  right: 1rem;
+  top: 46px;
+  cursor: pointer;
+  border: none;
+  background-color: inherit;
 `;
 
 const LeftArrowWrapper = styled.div`
