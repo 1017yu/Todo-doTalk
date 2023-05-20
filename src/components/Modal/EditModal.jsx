@@ -3,13 +3,13 @@
 import React from "react";
 import styled from "styled-components";
 import { useState } from "react";
-import { useSetRecoilState, useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { todoListState } from "~/src/states/todoAtoms";
 import { formattedDate } from "~/src/lib/dateUtils";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { BiEdit } from "react-icons/Bi";
-import { editTodo, getTodo } from "~/src/lib";
+import { editTodo, getTodo, reorderTodo } from "~/src/lib";
 import { BsFillCameraFill } from "react-icons/Bs";
 import { FaArrowCircleUp } from "react-icons/Fa";
 import { IoIosAppstore } from "react-icons/Io";
@@ -55,25 +55,17 @@ const EditModal = ({ item }) => {
     setInputValue("");
     // Modal Close
     handleClose();
+
+    // reorder 통신으로 order값 정렬
+    const ids = [];
+    setTodoList((oldTodoList) => {
+      oldTodoList.forEach((item) => ids.push(item.id));
+      return oldTodoList;
+    });
+    await reorderTodo(ids);
+
     getTodo();
   };
-
-  // const updateTodoList = async (newTodo) => {
-  //   const todoListData = await getTodo();
-  //   const sortedTodoList = todoListData.map((todoItem, index) => {
-  //     if (todoItem.id === newTodo.id) {
-  //       return {
-  //         ...todoItem,
-  //         order: todoList.length,
-  //       };
-  //     }
-  //     return {
-  //       ...todoItem,
-  //       order: index,
-  //     };
-  //   });
-  //   setTodoList(sortedTodoList);
-  // };
 
   return (
     <>
