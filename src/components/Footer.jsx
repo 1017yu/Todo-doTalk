@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import TodoItemCreator from "~/src/components/Todo/TodoItemCreator";
+import TodoItemCreator from "~/src/components/Main/TodoItemCreator";
 
 function Footer() {
   return (

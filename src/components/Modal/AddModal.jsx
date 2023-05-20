@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
-import TodoItemCreator from "~/src/components/Todo/TodoItemCreator";
+import TodoItemCreator from "~/src/components/Main/TodoItemCreator";
 import AddIcon from "@mui/icons-material/Add";
 import colors from "~/src/styles/colors.js";
 
