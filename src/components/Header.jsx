@@ -29,12 +29,12 @@ function Header() {
           <AiOutlineLeft className="leftArrow-Icon" />
           <Span>{`${todoList.length} tasks`}</Span>
         </LeftArrowWrapper>
-        <UserDiv>
+        <User href="https://github.com/1017yu" target="_blank">
           <Circle>
             <AiOutlineUser className="user-Icon" />
           </Circle>
           Kled
-        </UserDiv>
+        </User>
         <AllDeleteButton onClick={() => delAllTodo()}>
           <Span>선택 삭제</Span>
         </AllDeleteButton>
@@ -86,7 +86,7 @@ const Span = styled.span`
   color: white;
 `;
 
-const UserDiv = styled.div`
+const User = styled.a`
   .user-Icon {
     font-size: 2rem;
   }
