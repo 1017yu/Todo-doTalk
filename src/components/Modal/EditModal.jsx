@@ -70,7 +70,7 @@ const EditModal = ({ item }) => {
   return (
     <>
       {/* 아이콘 클릭 시, Modal Open */}
-      <BiEdit onClick={handleOpen} />
+      <EditIcon onClick={handleOpen} />
       <Modal
         open={open}
         onClose={handleClose}
@@ -104,6 +104,11 @@ const EditModal = ({ item }) => {
   );
 };
 
+const EditIcon = styled(BiEdit)`
+  font-size: 1.3rem;
+  color: ${colors.gray[1]};
+`;
+
 const StyledBox = styled(Box)`
   display: flex;
   flex-direction: column;
@@ -114,8 +119,10 @@ const StyledBox = styled(Box)`
   width: 400px;
   background-color: #fff;
   border: 2px solid #000;
+  border-radius: 1rem;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
   padding: 20px;
+  gap: 1rem;
 `;
 
 const StyledDiv = styled.div`
