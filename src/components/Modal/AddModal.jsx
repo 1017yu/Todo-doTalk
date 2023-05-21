@@ -8,7 +8,7 @@ import AddIcon from "@mui/icons-material/Add";
 import colors from "~/src/styles/colors.js";
 
 const AddModal = () => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
