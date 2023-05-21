@@ -10,11 +10,12 @@ import { formattedDate } from "../../lib/dateUtils";
 import EditModal from "~/src/components/Modal/EditModal";
 import DelTodo from "~/src/hooks/DelTodo";
 import colors from "~/src/styles/colors";
+import CircularProgress from "@mui/material/CircularProgress";
 
 function TodoItem({ item }) {
   // `todoListState` atom 업데이트
   const setTodoList = useSetRecoilState(todoListState);
-  const [delTodo] = DelTodo({ item });
+  const [delTodo, loading] = DelTodo({ item });
 
   // 요청 데이터 타입
   const todo = {
@@ -34,16 +35,6 @@ function TodoItem({ item }) {
     getTodo(editedTodo);
   };
 
-  // const updateTodoList = async () => {
-  //   const todoListData = await getTodo();
-  //   const sortedTodoList = todoListData.map((todoItem) => ({
-  //     ...todoItem,
-  //     done: !item.done,
-  //   }));
-
-  //   setTodoList(sortedTodoList);
-  // };
-
   return (
     <Li>
       <DateWrapper>{formattedDate(item.createdAt)}</DateWrapper>
@@ -54,11 +45,15 @@ function TodoItem({ item }) {
             checked={item.done}
             onChange={handleChange}
           />
-          {item.title}
+          {loading ? (
+            <CircularProgress style={{ color: "white", size: "2px" }} />
+          ) : (
+            item.title
+          )}
         </ItemLabel>
         <Button>
-          <Delete onClick={() => delTodo()} />
           <EditModal item={item} />
+          <DeleteIcon onClick={() => delTodo()} />
         </Button>
       </ItemContainer>
     </Li>
@@ -69,8 +64,9 @@ const Li = styled.li`
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin-top: 20px;
+  margin-top: 2rem;
   font-size: 1.3rem;
+  gap: 0.5rem;
 `;
 
 const DateWrapper = styled.div`
@@ -86,13 +82,14 @@ const ItemContainer = styled.div`
 
 const ItemLabel = styled.label`
   display: flex;
-  background-color: ${({ checked }) =>
-    checked ? colors.green[0] : colors.blue[5]};
+  background-color: ${({ checked, loading }) =>
+    loading ? "#fff" : checked ? colors.green[0] : colors.blue[5]};
   padding: 0.4rem 1rem 0.4rem 0.3rem;
   border-radius: 1rem;
   color: white;
   align-items: center;
   gap: 0.2rem;
+  margin-left: ${({ checked }) => (checked ? "" : "auto")};
 `;
 
 const StyledInput = styled.input`
@@ -117,8 +114,9 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-const Delete = styled(MdDelete)`
-  font-size: 1.5rem;
+const DeleteIcon = styled(MdDelete)`
+  font-size: 1.3rem;
+  color: ${colors.gray[0]};
 `;
 
 export default TodoItem;
