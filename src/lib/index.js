@@ -3,7 +3,7 @@ const options = (method, data) => ({
   headers: {
     "content-type": "application/json",
     apikey: "KDT5_nREmPe9B",
-    username: "KDT5_test",
+    username: "KDT5__YuHeeTae",
   },
   body: JSON.stringify(data),
 });
@@ -11,8 +11,8 @@ const options = (method, data) => ({
 const URL = "https://asia-northeast3-heropy-api.cloudfunctions.net/api/todos";
 
 // 항목 생성
-const createTodo = async (title) => {
-  const res = await fetch(URL, options("POST", { title }));
+const createTodo = async ({ title, order }) => {
+  const res = await fetch(URL, options("POST", { title, order }));
   const data = await res.json();
   return data;
 };
@@ -25,9 +25,9 @@ const getTodo = async () => {
 };
 
 // 항목 수정
-const updateTodo = async ({ id, title, done }) => {
+const editTodo = async ({ id, title, done, order }) => {
   const url = `${URL}/${id}`;
-  const res = await fetch(url, options("PUT", { title, done }));
+  const res = await fetch(url, options("PUT", { title, done, order }));
   const data = await res.json();
   return data;
 };
@@ -40,4 +40,12 @@ const deleteTodo = async (id) => {
   return data;
 };
 
-export { createTodo, getTodo, updateTodo, deleteTodo };
+// order 정렬
+const reorderTodo = async (todoIds) => {
+  const url = `${URL}/reorder`;
+  const res = await fetch(url, options("PUT", { todoIds }));
+  const data = await res.json();
+  return data;
+};
+
+export { createTodo, getTodo, editTodo, deleteTodo, reorderTodo };
