@@ -8,11 +8,11 @@ import { todoListState } from "~/src/states/todoAtoms";
 import { formattedDate } from "~/src/lib/dateUtils";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
-import { BiEdit } from "react-icons/Bi";
+import { BiEdit } from "react-icons/bi";
 import { editTodo, getTodo, reorderTodo } from "~/src/lib";
-import { BsFillCameraFill } from "react-icons/Bs";
-import { FaArrowCircleUp } from "react-icons/Fa";
-import { IoIosAppstore } from "react-icons/Io";
+import { BsFillCameraFill } from "react-icons/bs";
+import { FaArrowCircleUp } from "react-icons/fa";
+import { IoIosAppstore } from "react-icons/io";
 import colors from "~/src/styles/colors";
 
 // import colors from "~/src/styles/colors";
