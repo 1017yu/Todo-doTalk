@@ -41,11 +41,13 @@
 
 ## 🔥 주요 기능 피드백
 
-![ezgif com-video-to-gif (5)](https://github.com/1017yu/Programmers_Kled/assets/83483378/cf4eef31-1a83-4117-bbd5-f5b02814ea20)
+![ezgif com-video-to-gif (6)](https://github.com/1017yu/Wutcha/assets/83483378/2a7155d6-fa31-45e3-b700-b0cf1f56cc8e)
 
 <img width="600" alt="image" src="https://github.com/1017yu/Programmers_Kled/assets/83483378/7c3f6629-db2f-48f8-a607-5913973dd83a">
 
 <br />
+
+---
 
 ## 1. 할 일 목록(List)을 출력합니다.
 
@@ -68,9 +70,9 @@ TodoList 컴포넌트는 todoListState atom을 구독(참조)합니다.
 
 <br />
 
-<img width="590" alt="image" src="https://github.com/1017yu/Programmers_Kled/assets/83483378/d1786f2d-304b-4ffa-b80f-357636aa59a4">
-
 ![ezgif com-video-to-gif](https://github.com/1017yu/Programmers_Kled/assets/83483378/d03d9120-aa54-44c8-a070-2d068f940627)
+
+<img width="590" alt="image" src="https://github.com/1017yu/Programmers_Kled/assets/83483378/d1786f2d-304b-4ffa-b80f-357636aa59a4">
 
 <br />
 
@@ -169,8 +171,6 @@ API 요청이 완료되면 다시 setLoading 함수를 호출하여 loading 상�
 
 ---
 
----
-
 ## 🌵 셀프 피드백
 
 - Todo-item 수정 시, Modal 구현, 완료 항목 일괄 삭제 시 Alert를 구현하여 UX를 개선하였습니다.
@@ -190,6 +190,10 @@ API 요청이 완료되면 다시 setLoading 함수를 호출하여 loading 상�
 - API를 중복하여 호출하는 부분이 있는데, 피드백 받고 싶습니다! 🔥
 - 세세하게 컴포넌트를 나누지 못한 것 같아, 다소 난잡하게 보이는 JSX가 있습니다.
 - props를 더 적극적으로 활용하지 못한 아쉬움이 있습니다.
+
+<br />
+
+---
 
 ## 업데이트 기록
 
