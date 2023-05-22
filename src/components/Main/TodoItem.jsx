@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { MdDelete } from "react-icons/Md";
+import { MdDelete } from "react-icons/md";
 import { editTodo, getTodo } from "~/src/lib";
 import { todoListState } from "~/src/states/todoAtoms";
 import { formattedDate } from "../../lib/dateUtils";
