@@ -2,6 +2,22 @@ import { createGlobalStyle } from "styled-components";
 import colors from "~/src/styles/colors";
 
 const GlobalStyle = createGlobalStyle`
+
+@font-face {
+    font-family: 'omyu_pretty';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'MBC1961GulimM';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/MBC1961GulimM.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
 body {
     margin: 0;
     padding: 0;
@@ -11,6 +27,7 @@ body {
     box-sizing: border-box;
     min-height: 100%;
     background-color: ${colors.blue[4]};
+    font-family: 'omyu_pretty';
   }
 
   #root {
