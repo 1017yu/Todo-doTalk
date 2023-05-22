@@ -5,7 +5,7 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import colors from "../../styles/colors";
 import { todoListState } from "~/src/states/todoAtoms";
-import { FaArrowCircleUp } from "react-icons/Fa";
+import { FaArrowCircleUp } from "react-icons/fa";
 import { createTodo, getTodo } from "~/src/lib";
 
 function TodoItemCreator() {
