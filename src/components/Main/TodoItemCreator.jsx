@@ -85,6 +85,7 @@ const Input = styled.input`
   border-color: ${colors.gray[0]};
   height: 40px;
   width: 22rem;
+  padding-left: 0.5rem;
 `;
 
 export default TodoItemCreator;
