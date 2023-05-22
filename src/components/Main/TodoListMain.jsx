@@ -6,6 +6,7 @@ import TodoItem from "~/src/components/Main/TodoItem";
 import { todoListState } from "~/src/states/todoAtoms";
 import { getTodo } from "~/src/lib";
 import quotes from "~/src/lib/quotes";
+import { CircularProgress } from "@mui/material";
 
 function TodoList() {
   // `useRecoilState` -> `todoListState` atom 참조
@@ -13,16 +14,24 @@ function TodoList() {
   const setTodoList = useSetRecoilState(todoListState);
   const [scrollBottom, setScrollBottom] = useState(0);
   const [quote, setQuote] = useState("");
+  const [loading, setLoading] = useState(false);
   const mainRef = useRef();
 
   // 최초 렌더링
   useEffect(() => {
     const fetchTodoList = async () => {
+      // 로딩 스피너 동작
+      setLoading(true);
       // GET 요청,
       const todoListData = await getTodo();
       // setTodoList를 통해 GET 요청으로 반환된 todoListData로 todoListState atom 업데이트
       setTodoList(todoListData);
+
+      // 랜덤한 quote 출력
       setQuote(quotes[Math.floor(Math.random() * 10)]);
+
+      // 로딩 스피너 종료
+      setLoading(false);
     };
     fetchTodoList();
   }, []);
@@ -41,7 +50,7 @@ function TodoList() {
 
   return (
     <Main ref={mainRef}>
-      <Quote>{quote}</Quote>
+      {loading ? <CircularProgress /> : <Quote>{quote}</Quote>}
       <div>
         <Ul>
           {[...todoList].map((item) => (
