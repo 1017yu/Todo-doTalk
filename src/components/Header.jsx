@@ -14,6 +14,16 @@ function Header() {
   const [todoList] = useRecoilState(todoListState);
   const [delAllTodo] = DelAllTodo();
 
+  // 선택 항목 일괄 삭제 전, window.confirm을 통해 삭제 여부를 묻는다.
+  const handleDelAll = () => {
+    const confirm = window.confirm("⚠️ 정말 선택된 할 일을 삭제하시겠습니까?");
+
+    // 확인 = true 이므로, 선택된 항목 삭제
+    if (confirm) {
+      delAllTodo();
+    }
+  };
+
   return (
     <StyledHeader>
       <Div>
@@ -35,7 +45,7 @@ function Header() {
           </Circle>
           Kled
         </User>
-        <AllDeleteButton onClick={() => delAllTodo()}>
+        <AllDeleteButton onClick={handleDelAll}>
           <Span>선택 삭제</Span>
         </AllDeleteButton>
       </Div>
