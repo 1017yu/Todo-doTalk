@@ -1,5 +1,5 @@
-// Component가 mount되면 getTodo 함수를 호출
-// API 호출, TodoList를 받아온 후 todoListState Atom에 값을 할당
+// 선택된 항목(done: true)들을 일괄 삭제하는 Custom Hook
+// 삭제한 후 나머지 todoItem만을 반환해 다시 atom state에 업데이트
 import { useSetRecoilState } from "recoil";
 import { todoListState } from "~/src/states/todoAtoms";
 import { deleteTodo, getTodo, reorderTodo } from "~/src/lib";
@@ -24,14 +24,17 @@ const DelAllTodo = () => {
       const updatedTodoList = await getTodo();
       setTodoList(updatedTodoList);
 
-      // reorder 통신으로 order값 정렬
+      // order값 정렬
       const ids = [];
       setTodoList((todoList) => {
         todoList.forEach((item) => ids.push(item.id));
         return todoList;
       });
 
+      // reorder 통신
       await reorderTodo(ids);
+
+      //  업데이트된 데이터를 recoil atom인 `todoListState`에 업데이트합
       setTodoList(updatedTodoList);
     } catch (e) {
       console.error(e);
