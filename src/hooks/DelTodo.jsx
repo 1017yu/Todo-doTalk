@@ -1,5 +1,5 @@
-// Component가 mount되면 getTodo 함수를 호출
-// API 호출, TodoList를 받아온 후 todoListState Atom에 값을 할당
+// TodoItem.jsx의 DeleteIcon에 반응하여 해당 항목 삭제하는 Custom Hook
+//
 import { useSetRecoilState } from "recoil";
 import { todoListState } from "~/src/states/todoAtoms";
 import { deleteTodo, getTodo, reorderTodo } from "~/src/lib";
@@ -14,9 +14,12 @@ const DelTodo = ({ item }) => {
   // `todoListState` atom은 TodoList로 업데이트
   const deleteTodoList = async () => {
     try {
+      // 로딩 스피너 동작
       setLoading(true);
+
       // DELETE 요청,
       await deleteTodo(item.id);
+
       // setTodoList를 통해 GET 요청으로 반환된 todoListData로 todoListState atom 업데이트
       setTodoList((oldTodoList) =>
         oldTodoList.filter((todoItem) => todoItem.id !== item.id)
@@ -33,7 +36,11 @@ const DelTodo = ({ item }) => {
 
       // GET 통신
       const updatedTodoList = await getTodo();
+
+      //  업데이트된 데이터를 recoil atom인 `todoListState`에 업데이트합
       setTodoList(updatedTodoList);
+
+      // 로딩 스피너 동작
       setLoading(false);
     } catch (e) {
       console.error(e);
