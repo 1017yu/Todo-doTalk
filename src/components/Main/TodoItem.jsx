@@ -1,6 +1,6 @@
 // Todo 항목을 나타내는 TodoItem 컴포넌트
 // 삭제와 수정 기능이 있고, 수정을 위한 EditModal 컴포넌트 사용
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { MdDelete } from "react-icons/Md";
@@ -17,23 +17,41 @@ function TodoItem({ item }) {
   const setTodoList = useSetRecoilState(todoListState);
   const [delTodo, loading] = DelTodo({ item });
 
-  // 요청 데이터 타입
-  const todo = {
-    id: item.id,
-    title: item.title,
-    done: !item.done,
-    order: item.order,
-  };
+  // pending을 통해 체크박스를 예상치 못할 정도로 여러 번 클릭했을 때의 API 중복 호출 문제를 막음
+  const [pending, setPending] = useState(false);
 
   const handleChange = async () => {
-    const editedTodo = await editTodo(todo);
-    setTodoList((oldTodoList) =>
-      oldTodoList.map((todoItem) =>
-        todoItem.id === todo.id ? editedTodo : todoItem
-      )
-    );
-    getTodo(editedTodo);
+    setPending(true);
+    // 요청 데이터 타입
+    const todo = {
+      id: item.id,
+      title: item.title,
+      done: !item.done,
+      order: item.order,
+    };
+    try {
+      // PUT Api 호출
+      const editedTodo = await editTodo(todo);
+
+      setTodoList((todoList) =>
+        todoList.map((item) => (item.id === todo.id ? editedTodo : item))
+      );
+      // GET api 호출
+      getTodo(editedTodo);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setPending(false);
+    }
   };
+
+  // clean-up을 통해 리소스 해제, 메모리 누수 에러 방지
+  useEffect(() => {
+    return () => {
+      // 정리(clean-up) 함수
+      setPending(false);
+    };
+  }, []);
 
   return (
     <Li>
@@ -44,9 +62,10 @@ function TodoItem({ item }) {
             type="checkbox"
             checked={item.done}
             onChange={handleChange}
+            disabled={pending}
           />
           {loading ? (
-            <CircularProgress style={{ color: "white", size: "2px" }} />
+            <CircularProgress style={{ color: "white" }} />
           ) : (
             item.title
           )}
