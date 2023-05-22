@@ -1,0 +1,5 @@
+{
+  "presets": ["next/babel"],
+  // style hash 앞에 component name을 접두사로 붙여 디버깅 편리 + 서버와 클라이언트 hash 불일치 오류 수정
+  "plugins": ["babel-plugin-styled-components"]
+}
