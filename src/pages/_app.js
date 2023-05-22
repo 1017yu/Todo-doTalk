@@ -12,7 +12,8 @@ function MyApp({ Component, pageProps }) {
       <GlobalStyle />
       <Layout>
         <Head>
-          <title>토도</title>
+          <link rel="icon" href="/favicon.ico" />
+          <title>투두두톡</title>
         </Head>
         <Component {...pageProps} />
       </Layout>

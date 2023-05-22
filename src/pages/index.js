@@ -1,5 +1,5 @@
 import Header from "~/src/components/Header";
-import TodoList from "~/src/components/Main/TodoList";
+import TodoList from "~/src/components/Main/TodoListMain";
 import Footer from "~/src/components/Footer";
 
 function Home() {
