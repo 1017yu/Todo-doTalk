@@ -37,17 +37,11 @@ const EditModal = ({ item }) => {
 
   const handleChange = (e) => setInputValue(e.target.value);
 
-  const handleKeyPress = async (e) => {
-    if (e.key === "Enter") {
-      // Edit 후 onClose를 호출하여 atom 업데이트
-      updateItem();
-    }
-  };
-
+  // PUT 요청을 통해 수정 진행, 업데이트하고자 하는 항목의 id값을 비교
   const updateItem = async () => {
     const editedTodo = await editTodo(todo);
-    setTodoList((oldTodoList) =>
-      oldTodoList.map((todoItem) =>
+    setTodoList((todoList) =>
+      todoList.map((todoItem) =>
         todoItem.id === todo.id ? editedTodo : todoItem
       )
     );
@@ -58,13 +52,20 @@ const EditModal = ({ item }) => {
 
     // reorder 통신으로 order값 정렬
     const ids = [];
-    setTodoList((oldTodoList) => {
-      oldTodoList.forEach((item) => ids.push(item.id));
-      return oldTodoList;
+    setTodoList((todoList) => {
+      todoList.forEach((item) => ids.push(item.id));
+      return todoList;
     });
     await reorderTodo(ids);
 
     getTodo();
+  };
+
+  const handleKeyPress = async (e) => {
+    if (e.key === "Enter") {
+      // Edit 후 onClose를 호출하여 atom 업데이트
+      updateItem();
+    }
   };
 
   return (
