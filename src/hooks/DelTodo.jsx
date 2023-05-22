@@ -21,15 +21,15 @@ const DelTodo = ({ item }) => {
       await deleteTodo(item.id);
 
       // setTodoList를 통해 GET 요청으로 반환된 todoListData로 todoListState atom 업데이트
-      setTodoList((oldTodoList) =>
-        oldTodoList.filter((todoItem) => todoItem.id !== item.id)
+      setTodoList((todoList) =>
+        todoList.filter((todoItem) => todoItem.id !== item.id)
       );
 
       // reorder 통신으로 order값 정렬
       const ids = [];
-      setTodoList((oldTodoList) => {
-        oldTodoList.forEach((item) => ids.push(item.id));
-        return oldTodoList;
+      setTodoList((todoList) => {
+        todoList.forEach((item) => ids.push(item.id));
+        return todoList;
       });
 
       await reorderTodo(ids);
@@ -40,7 +40,7 @@ const DelTodo = ({ item }) => {
       //  업데이트된 데이터를 recoil atom인 `todoListState`에 업데이트합
       setTodoList(updatedTodoList);
 
-      // 로딩 스피너 동작
+      // 로딩 스피너 종료
       setLoading(false);
     } catch (e) {
       console.error(e);
